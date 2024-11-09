@@ -3,50 +3,75 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:gravity="center">
 
+    <!-- Sound Settings Header -->
     <TextView
+        android:id="@+id/soundLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Notification Sound"
+        android:text="Sound Settings"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="20dp"/>
+
+    <!-- Sound Selection -->
+    <TextView
+        android:id="@+id/selectSoundLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Sound Below:"
+        android:textSize="16sp"
+        android:layout_marginBottom="10dp"/>
 
     <RadioGroup
-        android:id="@+id/soundOptionsGroup"
+        android:id="@+id/soundRadioGroup"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp">
 
+        <!-- Radio Buttons for Sound Options -->
         <RadioButton
-            android:id="@+id/sound1"
+            android:id="@+id/sound1RadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:tag="sound_1"
             android:text="Sound 1" />
 
         <RadioButton
-            android:id="@+id/sound2"
+            android:id="@+id/sound2RadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:tag="sound_2"
             android:text="Sound 2" />
 
         <RadioButton
-            android:id="@+id/sound3"
+            android:id="@+id/sound3RadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:tag="sound_3"
             android:text="Sound 3" />
     </RadioGroup>
 
+    <!-- Preview Sound Button -->
     <Button
-        android:id="@+id/previewButton"
+        android:id="@+id/playPreviewButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Preview" />
+        android:text="Preview Sound"
+        android:textSize="16sp"
+        android:layout_marginBottom="20dp"/>
 
+    <!-- Save Settings Button -->
     <Button
-        android:id="@+id/saveButton"
+        android:id="@+id/saveSettingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
-        android:layout_marginTop="20dp" />
+        android:text="Save Settings"
+        android:textSize="16sp"/>
 </LinearLayout>
