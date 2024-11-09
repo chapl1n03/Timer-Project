@@ -11,6 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -94,8 +98,13 @@ public class TimerActivity extends AppCompatActivity {
 
     private void saveTimerHistory(int hours, int minutes, int seconds) {
         String duration = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-        // Insert the timer data into the database, including the sound setting
-        databaseHelper.insertTimer(duration, hours, minutes, seconds, selectedSound);
+        String endTime = getCurrentTime();  // Get the current time when the timer ends
+        databaseHelper.insertTimer(duration, hours, minutes, seconds, selectedSound, endTime);
+    }
+
+    private String getCurrentTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return sdf.format(new Date());  // Get the current date and time
     }
 
     @SuppressLint("Range")
