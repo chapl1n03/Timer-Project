@@ -3,6 +3,7 @@ package com.example.timerapplication;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -64,13 +65,14 @@ public class SoundActivity extends AppCompatActivity {
     private void playSelectedSound() {
         String selectedSound = getSelectedSound();
 
+        // If the media player is playing, stop and release it first
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
             mediaPlayer.release();
-            mediaPlayer = new MediaPlayer(); // Recreate the MediaPlayer instance
         }
 
         try {
+            // Create a new MediaPlayer instance for the selected sound
             switch (selectedSound) {
                 case "sound_1":
                     mediaPlayer = MediaPlayer.create(this, R.raw.sound01);
@@ -86,12 +88,19 @@ public class SoundActivity extends AppCompatActivity {
                     break;
             }
 
-            mediaPlayer.start(); // Play the selected sound
+            // Check if mediaPlayer is initialized correctly
+            if (mediaPlayer != null) {
+                mediaPlayer.start(); // Play the selected sound
+            } else {
+                Log.e("SoundActivity", "MediaPlayer initialization failed.");
+                Toast.makeText(this, "Error initializing media player", Toast.LENGTH_SHORT).show();
+            }
         } catch (Exception e) {
+            Log.e("SoundActivity", "Error playing sound", e);
             Toast.makeText(this, "Error playing sound", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
         }
     }
+
 
 
     private String getSelectedSound() {
