@@ -1,9 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.amritatimer">
+    package="com.example.timerapplication">
 
     <application
         android:allowBackup="true"
-        android:label="Amrita Timer"
+        android:label="QuickTimer"
+        android:icon="@drawable/amritalogo"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <!-- Splash Screen Activity -->
@@ -17,5 +18,7 @@
 
         <!-- Timer Screen Activity -->
         <activity android:name="com.example.timerapplication.TimerActivity" />
+        <activity android:name="com.example.timerapplication.SoundActivity" />
+        <activity android:name="com.example.timerapplication.TimerHistory" />
     </application>
 </manifest>

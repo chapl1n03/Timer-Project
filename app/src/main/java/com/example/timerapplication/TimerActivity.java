@@ -22,7 +22,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private EditText inputHours, inputMinutes, inputSeconds;
     private TextView timerDisplay;
-    private Button startButton, pauseButton, resetButton, soundSettingsButton;
+    private Button startButton, pauseButton, resetButton, soundSettingsButton, timeHistoryButton;
     private CountDownTimer countDownTimer;
     private long timeInMillis, timeLeftInMillis;
     private boolean isRunning;
@@ -43,6 +43,7 @@ public class TimerActivity extends AppCompatActivity {
         pauseButton = findViewById(R.id.pauseButton);
         resetButton = findViewById(R.id.resetButton);
         soundSettingsButton = findViewById(R.id.soundSettingsButton);
+        timeHistoryButton = findViewById(R.id.timeHistoryButton);
         databaseHelper = new DatabaseHelper(this);
 
         loadSelectedSound();
@@ -51,6 +52,7 @@ public class TimerActivity extends AppCompatActivity {
         pauseButton.setOnClickListener(v -> pauseTimer());
         resetButton.setOnClickListener(v -> resetTimer());
         soundSettingsButton.setOnClickListener(v -> startActivity(new Intent(TimerActivity.this, SoundActivity.class)));
+        timeHistoryButton.setOnClickListener(v -> startActivity(new Intent(TimerActivity.this, TimerHistory.class)));
     }
 
 
@@ -142,6 +144,7 @@ public class TimerActivity extends AppCompatActivity {
             isRunning = false;
         }
     }
+
 }
 
 

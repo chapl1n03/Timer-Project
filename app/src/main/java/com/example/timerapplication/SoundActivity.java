@@ -27,31 +27,24 @@ public class SoundActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sound);
 
-        // Initialize UI elements
         soundRadioGroup = findViewById(R.id.soundRadioGroup);
         playPreviewButton = findViewById(R.id.playPreviewButton);
         saveSettingsButton = findViewById(R.id.saveSettingsButton);
 
-        // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 
-        // Initialize MediaPlayer for sound preview
         mediaPlayer = new MediaPlayer();
 
-        // Load saved settings
         loadSettings();
 
-        // Set listeners
         playPreviewButton.setOnClickListener(v -> playSelectedSound());
 
         saveSettingsButton.setOnClickListener(v -> saveSettings());
     }
 
-    // Load saved settings from SharedPreferences
     private void loadSettings() {
         String savedSound = sharedPreferences.getString(SELECTED_SOUND_KEY, "sound_1");
 
-        // Set the selected sound in the RadioGroup
         switch (savedSound) {
             case "sound_1":
                 ((RadioButton) findViewById(R.id.sound1RadioButton)).setChecked(true);
@@ -62,58 +55,68 @@ public class SoundActivity extends AppCompatActivity {
             case "sound_3":
                 ((RadioButton) findViewById(R.id.sound3RadioButton)).setChecked(true);
                 break;
+            default:
+                ((RadioButton) findViewById(R.id.sound1RadioButton)).setChecked(true); // Default
+                break;
         }
     }
 
-    // Play the selected sound
     private void playSelectedSound() {
         String selectedSound = getSelectedSound();
 
-        // Release any previous media player instance
-        if (mediaPlayer != null) {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
             mediaPlayer.release();
-            mediaPlayer = new MediaPlayer();
+            mediaPlayer = new MediaPlayer(); // Recreate the MediaPlayer instance
         }
 
-        switch (selectedSound) {
-            case "sound_1":
-                mediaPlayer = MediaPlayer.create(this, R.raw.sound01);
-                break;
-            case "sound_2":
-                mediaPlayer = MediaPlayer.create(this, R.raw.sound02);
-                break;
-            case "sound_3":
-                mediaPlayer = MediaPlayer.create(this, R.raw.sound03);
-                break;
-        }
+        try {
+            switch (selectedSound) {
+                case "sound_1":
+                    mediaPlayer = MediaPlayer.create(this, R.raw.sound01);
+                    break;
+                case "sound_2":
+                    mediaPlayer = MediaPlayer.create(this, R.raw.sound02);
+                    break;
+                case "sound_3":
+                    mediaPlayer = MediaPlayer.create(this, R.raw.sound03);
+                    break;
+                default:
+                    mediaPlayer = MediaPlayer.create(this, R.raw.sound01); // Default sound
+                    break;
+            }
 
-        mediaPlayer.start(); // Play the selected sound
+            mediaPlayer.start(); // Play the selected sound
+        } catch (Exception e) {
+            Toast.makeText(this, "Error playing sound", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
     }
 
-    // Get the selected sound based on the RadioButton checked
+
     private String getSelectedSound() {
         int selectedId = soundRadioGroup.getCheckedRadioButtonId();
         RadioButton selectedRadioButton = findViewById(selectedId);
-        return selectedRadioButton != null ? (String) selectedRadioButton.getTag() : "sound_1";
+        return selectedRadioButton != null ? (String) selectedRadioButton.getTag() : "sound_1"; // Default to "sound_1"
     }
 
-    // Save the sound settings to SharedPreferences
     private void saveSettings() {
         String selectedSound = getSelectedSound();
 
-        // Save to SharedPreferences
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(SELECTED_SOUND_KEY, selectedSound);
         editor.apply();
 
         Toast.makeText(this, "Settings Saved", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (mediaPlayer != null) {
-            mediaPlayer.release(); // Release the media player when the activity is destroyed
+            mediaPlayer.release(); // Ensure the media player is released when the activity is destroyed
         }
     }
 }
+
