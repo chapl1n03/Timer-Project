@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Notification Sound"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp" />
+
+    <RadioGroup
+        android:id="@+id/soundOptionsGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/sound1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sound 1" />
+
+        <RadioButton
+            android:id="@+id/sound2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sound 2" />
+
+        <RadioButton
+            android:id="@+id/sound3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sound 3" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/previewButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Preview" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_marginTop="20dp" />
+</LinearLayout>
