@@ -1,5 +1,6 @@
 package com.example.timerapplication;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.MediaPlayer;
@@ -48,6 +49,8 @@ public class TimerActivity extends AppCompatActivity {
         soundSettingsButton.setOnClickListener(v -> startActivity(new Intent(TimerActivity.this, SoundActivity.class)));
     }
 
+
+
     private void startTimer() {
         try {
             int hours = Integer.parseInt(inputHours.getText().toString());
@@ -91,18 +94,21 @@ public class TimerActivity extends AppCompatActivity {
 
     private void saveTimerHistory(int hours, int minutes, int seconds) {
         String duration = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-        // Insert the timer data into the database
-        databaseHelper.insertTimer(duration, hours, minutes, seconds);
+        // Insert the timer data into the database, including the sound setting
+        databaseHelper.insertTimer(duration, hours, minutes, seconds, selectedSound);
     }
 
+    @SuppressLint("Range")
     private void loadSelectedSound() {
-        Cursor cursor = databaseHelper.getSound();
-        if (cursor.moveToFirst()) {
-            selectedSound = cursor.getString(0); // Assumes the sound is stored in the first column
-        } else {
-            selectedSound = "default_sound"; // Default sound if no entry is found
+        // Get the sound name from the database
+        selectedSound = databaseHelper.getSound();  // Now it directly gets a String
+
+        if (selectedSound == null || selectedSound.isEmpty()) {
+            selectedSound = "default_sound";  // Use the default sound if no setting is found
         }
     }
+
+
 
     private void updateTimerDisplay() {
         int hours = (int) (timeLeftInMillis / 1000) / 3600;
@@ -128,3 +134,6 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 }
+
+
+
