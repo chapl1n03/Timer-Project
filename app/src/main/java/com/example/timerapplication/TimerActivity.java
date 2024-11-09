@@ -1,5 +1,7 @@
 package com.example.timerapplication;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -14,10 +16,13 @@ public class TimerActivity extends AppCompatActivity {
 
     private EditText inputHours, inputMinutes, inputSeconds;
     private TextView timerDisplay;
-    private Button startButton, pauseButton, resetButton;
+    private Button startButton, pauseButton, resetButton, soundSettingsButton;
     private CountDownTimer countDownTimer;
     private long timeInMillis, timeLeftInMillis;
     private boolean isRunning;
+    private MediaPlayer mediaPlayer;
+    private DatabaseHelper databaseHelper;
+    private String selectedSound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +36,15 @@ public class TimerActivity extends AppCompatActivity {
         startButton = findViewById(R.id.startButton);
         pauseButton = findViewById(R.id.pauseButton);
         resetButton = findViewById(R.id.resetButton);
+        soundSettingsButton = findViewById(R.id.soundSettingsButton);
+        databaseHelper = new DatabaseHelper(this);
+
+        loadSelectedSound();
 
         startButton.setOnClickListener(v -> startTimer());
         pauseButton.setOnClickListener(v -> pauseTimer());
         resetButton.setOnClickListener(v -> resetTimer());
+        soundSettingsButton.setOnClickListener(v -> startActivity(new Intent(TimerActivity.this, SoundSettingsActivity.class)));
     }
 
     private void startTimer() {
@@ -53,25 +63,32 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 timerDisplay.setText("00:00:00");
-                MediaPlayer mediaPlayer = MediaPlayer.create(TimerActivity.this, R.raw.notification_sound);
-                mediaPlayer.start();
+                playNotificationSound();
                 Toast.makeText(TimerActivity.this, "Time's up!", Toast.LENGTH_SHORT).show();
+                saveTimerHistory(hours, minutes, seconds);
             }
         }.start();
 
         isRunning = true;
     }
 
-    private void pauseTimer() {
-        if (isRunning) {
-            countDownTimer.cancel();
-            isRunning = false;
-        }
+    private void playNotificationSound() {
+        mediaPlayer = MediaPlayer.create(this, getResources().getIdentifier(selectedSound, "raw", getPackageName()));
+        mediaPlayer.start();
     }
 
-    private void resetTimer() {
-        pauseTimer();
-        timerDisplay.setText("00:00:00");
+    private void saveTimerHistory(int hours, int minutes, int seconds) {
+        String duration = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        databaseHelper.insertTimer(duration);
+    }
+
+    private void loadSelectedSound() {
+        Cursor cursor = databaseHelper.getSound();
+        if (cursor.moveToFirst()) {
+            selectedSound = cursor.getString(0);
+        } else {
+            selectedSound = "default_sound";
+        }
     }
 
     private void updateTimerDisplay() {
@@ -81,4 +98,3 @@ public class TimerActivity extends AppCompatActivity {
         timerDisplay.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
     }
 }
-
