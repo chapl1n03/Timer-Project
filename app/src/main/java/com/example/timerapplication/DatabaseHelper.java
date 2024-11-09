@@ -28,11 +28,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_DURATION + " TEXT, " +
                     COLUMN_SOUND + " TEXT)";  // Add sound column
 
-    private static final String CREATE_SOUND_TABLE =
-            "CREATE TABLE sound_settings (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "sound TEXT)";  // Separate table for sound settings
-
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -40,7 +35,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE);
-        db.execSQL(CREATE_SOUND_TABLE); // Create sound settings table
     }
 
     @Override
