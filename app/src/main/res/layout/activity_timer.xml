@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <!-- Timer Display -->
+    <TextView
+        android:id="@+id/timerDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00:00"
+        android:textSize="80sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="30dp" />
+
+    <!-- Label for Timer Input -->
+    <TextView
+        android:id="@+id/setTimerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set your timer here"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp" />
+
+    <!-- Horizontal Layout for Hours, Minutes, Seconds with Colons -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="30dp">
+
+        <!-- Input for Hours -->
+
+        <!-- Colon Separator -->
+        <EditText
+            android:id="@+id/inputHours"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="HH"
+            android:inputType="number"
+            android:textSize="35sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textSize="24sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Input for Minutes -->
+        <EditText
+            android:id="@+id/inputMinutes"
+            android:hint="MM"
+            android:inputType="number"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:textSize="35sp"
+            android:gravity="center" />
+
+        <!-- Colon Separator -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textSize="24sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Input for Seconds -->
+        <EditText
+            android:id="@+id/inputSeconds"
+            android:hint="SS"
+            android:inputType="number"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:textSize="35sp"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <!-- Horizontal Layout for Start and Pause Buttons -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <!-- Start Button -->
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start"
+            android:textSize="16sp"
+            android:layout_marginEnd="10dp" />
+
+        <!-- Pause Button -->
+        <Button
+            android:id="@+id/pauseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pause"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Reset Button on the Next Line -->
+    <Button
+        android:id="@+id/resetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        android:textSize="16sp"
+        android:layout_marginTop="20dp" />
+
+</LinearLayout>
